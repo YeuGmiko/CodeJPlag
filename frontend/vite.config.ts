@@ -1,39 +1,45 @@
-import { defineConfig } from 'vite'
 import { fileURLToPath, URL } from 'node:url'
-import envCompatible from "vite-plugin-env-compatible";
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
-import UnoCSS from 'unocss/vite'
+import { NaiveUiResolver} from 'unplugin-vue-components/resolvers'
+import { defineConfig } from 'vite'
+import type { UserConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import {NaiveUiResolver} from "unplugin-vue-components/resolvers";
 
 // https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [
-    vue(),
-    UnoCSS(),
-    envCompatible({
-      prefix: ''
-    }),
+export default defineConfig((userConfig: UserConfig) => {
+  let base = '/'
+  switch (userConfig.mode) {
+    case 'dev':
+      base = '/JPlag-Dev/'
+      break
+    case 'prod':
+      base = '/JPlag/'
+      break
+    case 'demo':
+      base = '/Demo/'
+      break
+  }
+  return {
+    plugins: [
+      vue(),
       AutoImport({
         imports: [
-            'vue',
-            'pinia',
+          'vue'
         ]
       }),
       Components({
-        resolvers: [
-            NaiveUiResolver(),
-        ]
+        resolvers: [NaiveUiResolver()]
       })
-  ],
-  resolve: {
-    alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
-      '@view': fileURLToPath(new URL('./src/view', import.meta.url))
+    ],
+    resolve: {
+      alias: {
+        '@': fileURLToPath(new URL('./src', import.meta.url))
+      }
+    },
+    base: base,
+    server: {
+      port: 80
     }
-  },
-  server: {
-    port: 80
   }
 })
