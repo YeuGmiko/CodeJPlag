@@ -23,7 +23,7 @@ import { OptionsFactory } from '@/model/factories/OptionsFactory'
 import type { CliOptions } from '@/model/CliOptions'
 import RepositoryReference from '@/components/RepositoryReference.vue'
 
-const overview: Ref<Overview | null> = ref(null)
+const overview: Ref<Overview | undefined> = ref(undefined)
 const cliOptions: Ref<CliOptions | undefined> = ref(undefined)
 
 OverviewFactory.getOverview()
