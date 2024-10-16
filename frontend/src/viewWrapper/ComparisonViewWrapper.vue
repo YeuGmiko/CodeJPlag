@@ -45,7 +45,7 @@ ComparisonFactory.getComparison(props.comparisonFileName)
 
 OverviewFactory.getOverview()
   .then((overview) => {
-    language.value = overview.language
+    language.value = overview?.language ?? null
   })
   .catch((error) => {
     redirectOnError(error, 'Could not load coparison:\n')
