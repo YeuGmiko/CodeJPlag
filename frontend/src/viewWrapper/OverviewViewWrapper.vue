@@ -19,11 +19,11 @@ import type { Overview } from '@/model/Overview'
 import LoadingCircle from '@/components/LoadingCircle.vue'
 import { redirectOnError } from '@/router'
 
-const overview: Ref<Overview | undefined> = ref()
+const overview: Ref<Overview | null> = ref(null)
 
 OverviewFactory.getOverview()
   .then((o) => {
-    overview.value = o
+    overview.value = o ?? null
   })
   .catch((error) => {
     redirectOnError(error, 'Could not load overview:\n')
