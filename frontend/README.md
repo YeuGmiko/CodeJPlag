@@ -28,3 +28,7 @@ export const axios = Axios.create({
     withCredentials: true
 })
 ```
+
+**前后端项目说明**
+
+在Fronted、Backend目录下，都有README文件进行项目的单独说明
