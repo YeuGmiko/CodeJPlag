@@ -20,7 +20,7 @@ npm run build
 
 > file path: src/api/index.ts
 
-修改Axios实例对象的BaseUrl为部署服务器IP
+修改Axios实例对象的BaseUrl为后端部署服务器IP
 
 ```ts
 export const axios = Axios.create({
