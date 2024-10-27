@@ -24,7 +24,7 @@ npm run build
 
 ```ts
 export const axios = Axios.create({
-    baseURL: 'http://8.138.14.75:8080',
+    baseURL: 'http://your/backend/baseUrl',
     withCredentials: true
 })
 ```
