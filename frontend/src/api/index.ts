@@ -2,8 +2,8 @@ import type { AxiosResponse } from 'axios'
 import Axios from 'axios'
 
 export const axios = Axios.create({
-    baseURL: 'http://8.138.14.75:8080',
-    withCredentials: true
+    baseURL: '/api-jplag',
+    timeout: 8 * 60 * 1000
 })
 
 axios.interceptors.response.use((res: AxiosResponse) => {
