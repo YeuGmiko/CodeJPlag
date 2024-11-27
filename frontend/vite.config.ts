@@ -39,7 +39,15 @@ export default defineConfig((userConfig: UserConfig) => {
     },
     base: base,
     server: {
-      port: 80
+      port: 3322,
+      open: true,
+      proxy: {
+        '/api-jplag': {
+          target: 'http://localhost:8080',
+          changeOrigin: true
+        }
+      },
+      cors: true,
     }
   }
 })
