@@ -1,10 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import Auth from '@/views/Auth.vue'
 import FileUploadView from '@/views/FileUploadView.vue'
 import OverviewViewWrapper from '@/viewWrapper/OverviewViewWrapper.vue'
 import ComparisonViewWrapper from '@/viewWrapper/ComparisonViewWrapper.vue'
 import ErrorView from '@/views/ErrorView.vue'
 import InformationViewWrapper from '@/viewWrapper/InformationViewWrapper.vue'
 import ClusterViewWrapper from '@/viewWrapper/ClusterViewWrapper.vue'
+import { useUserStore } from '@/stores/user'
+import { storeToRefs } from 'pinia'
 
 /**
  * The router is used to navigate between the different views of the application.
@@ -14,7 +17,12 @@ const router = createRouter({
   routes: [
     {
       path: '',
-      redirect: '/home'
+      redirect: '/auth'
+    },
+    {
+      path: '/auth',
+      name: 'auth',
+      component: Auth
     },
     {
       path: '/home',
@@ -51,7 +59,7 @@ const router = createRouter({
     },
     {
       path: '/:pathMatch(.*)*',
-      redirect: '/error/Could not find the requested page/FileUploadView/Back to file upload'
+      redirect: '/error/Could not find the requested page/FileUploadPage/Back to file upload'
     }
   ]
 })
@@ -72,13 +80,13 @@ function redirectOnError(
     }
   })
 }
-// router.beforeEach((to, from, next) => {
-//   if (to.path !== '/') {
-//     next('/');
-//   } else {
-//     next();
-//   }
-// });
+router.beforeEach((to, from, next) => {
+  const { isLogin } = storeToRefs(useUserStore())
+  if (to.path === '/auth' || isLogin.value ) next()
+  else next({
+    name: 'auth'
+  })
+});
 let hasHadRouterError = false
 router.onError((error) => {
   if (hasHadRouterError) {
