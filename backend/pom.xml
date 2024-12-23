@@ -163,7 +163,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.yeu.tool.jplag.Application</mainClass>
+                            <mainClass>com.yeu.code.jplag.Application</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
