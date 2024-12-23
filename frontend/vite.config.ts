@@ -3,24 +3,10 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { NaiveUiResolver} from 'unplugin-vue-components/resolvers'
 import { defineConfig } from 'vite'
-import type { UserConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
-export default defineConfig((userConfig: UserConfig) => {
-  let base = '/'
-  switch (userConfig.mode) {
-    case 'dev':
-      base = '/JPlag-Dev/'
-      break
-    case 'prod':
-      base = '/JPlag/'
-      break
-    case 'demo':
-      base = '/Demo/'
-      break
-  }
-  return {
+export default defineConfig( {
     plugins: [
       vue(),
       AutoImport({
@@ -37,9 +23,15 @@ export default defineConfig((userConfig: UserConfig) => {
         '@': fileURLToPath(new URL('./src', import.meta.url))
       }
     },
-    base: base,
     server: {
-      port: 80
+      port: 3322,
+      open: true,
+      proxy: {
+        '/api-jplag': {
+          target: 'http://8.138.14.75:8081',
+          changeOrigin: true
+        }
+      },
+      cors: true,
     }
-  }
-})
+  })
