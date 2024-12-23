@@ -49,11 +49,11 @@ public class FileUtil {
         } else if (!source.mkdirs()) {
             throw new IOException("Directory create failed: " + source.getAbsolutePath());
         } else {
-            File[] var3 = source.listFiles();
-            int var4 = var3.length;
+            File[] files = source.listFiles();
+            int len = files.length;
 
-            for(int var5 = 0; var5 < var4; ++var5) {
-                File file = var3[var5];
+            for(int i = 0; i < len; ++i) {
+                File file = files[i];
                 _copyFiles(sourceBasePath + source.getName(), file, new File(target, source.getName()));
             }
 
@@ -72,11 +72,10 @@ public class FileUtil {
 
     public static String getFilePath(String... splitPath) {
         StringBuffer res = new StringBuffer();
-        String[] var2 = splitPath;
-        int var3 = splitPath.length;
+        int len = splitPath.length;
 
-        for(int var4 = 0; var4 < var3; ++var4) {
-            String path = var2[var4];
+        for(int i = 0; i < len; ++i) {
+            String path = splitPath[i];
             res.append(path).append(File.separator);
         }
 
@@ -86,11 +85,11 @@ public class FileUtil {
     public static void delAllDirsAndFiles(File target) throws IOException {
         if (target.exists()) {
             if (target.isDirectory()) {
-                File[] var2 = target.listFiles();
-                int var3 = var2.length;
+                File[] files = target.listFiles();
+                int len = files.length;
 
-                for(int var4 = 0; var4 < var3; ++var4) {
-                    File file = var2[var4];
+                for(int i = 0; i < len; ++i) {
+                    File file = files[i];
                     delAllDirsAndFiles(file);
                 }
             }
@@ -107,7 +106,7 @@ public class FileUtil {
         }
     }
 
-    public static void unZip(File source, File target) throws IOException {
+    public static void unZip(File source, File target) {
         try {
             if (!source.exists()) {
                 throw new IOException("The file [" + source.getAbsolutePath() + "] is not exists!");
@@ -116,37 +115,27 @@ public class FileUtil {
             String basePath = target.getAbsolutePath();
             ZipFile zip = new ZipFile(source);
 
-            try {
-                zip.stream().forEach((entry) -> {
-                    System.out.println(entry.getName());
+            zip.stream().forEach((entry) -> {
+                System.out.println(entry.getName());
 
-                    try {
-                        File zipItem = new File(basePath, entry.getName());
-                        if (entry.isDirectory()) {
-                            if (!zipItem.mkdirs()) {
-                                throw new IOException("文件创建失败");
-                            }
-                        } else {
-                            zipItem.getParentFile().mkdirs();
-                            outputByIO(zip.getInputStream(entry), new FileOutputStream(zipItem));
-                        }
-                    } catch (IOException var4) {
-                        throw new RuntimeException(var4);
-                    }
-                });
-            } catch (Throwable var7) {
                 try {
-                    zip.close();
-                } catch (Throwable var6) {
-                    var7.addSuppressed(var6);
+                    File zipItem = new File(basePath, entry.getName());
+                    if (entry.isDirectory()) {
+                        if (!zipItem.mkdirs()) {
+                            throw new IOException("文件创建失败");
+                        }
+                    } else {
+                        zipItem.getParentFile().mkdirs();
+                        outputByIO(zip.getInputStream(entry), new FileOutputStream(zipItem));
+                    }
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
-
-                throw var7;
-            }
+            });
 
             zip.close();
-        } catch (IOException var8) {
-            var8.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
