@@ -48,8 +48,8 @@ public class JPlagController {
 
         try {
             return this.jplagService.getJPlagResultFileToResponse(session.getId());
-        } catch (IOException var7) {
-            var7.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
             throw new RestException(500, "Server error, upload result file failed");
         }
     }

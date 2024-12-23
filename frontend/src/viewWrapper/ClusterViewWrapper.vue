@@ -7,8 +7,6 @@
     >
       <LoadingCircle class="mx-auto" />
     </div>
-
-    <RepositoryReference />
   </div>
 </template>
 

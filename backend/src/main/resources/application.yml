@@ -13,7 +13,5 @@ spring:
       max-request-size: 1000MB
 
 custom:
-#  前端项目BaseUrl
-#  fronted_base_url: http://your/fronted/base/url;http://localhost
 #  用于该项目暂存文件的目录
   base-resource-path: E:\Desktop\WebProject\CodeJPlag-main\backend\src\main\resources
