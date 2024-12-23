@@ -167,7 +167,7 @@ onBeforeUnmount(removeLoading)
     <div class="header p-[20px]">
       <NFlex>
         <div>
-          <span class="text-3xl font-bold text-black">Moni墨莉</span>
+          <span class="text-3xl font-bold text-black">JY锦屿</span>
         </div>
         <div class="flex items-end">
           <span class="text-xl">JPlag代码重复度检测</span>
