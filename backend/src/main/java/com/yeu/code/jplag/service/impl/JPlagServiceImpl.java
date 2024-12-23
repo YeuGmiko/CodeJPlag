@@ -29,8 +29,8 @@ public class JPlagServiceImpl implements JPlagService {
         JPlagLanguage JLanguage;
         try {
             JLanguage = JPlagLanguage.getByName(language);
-        } catch (IllegalArgumentException var12) {
-            throw new RestException(404, var12.getMessage());
+        } catch (IllegalArgumentException e) {
+            throw new RestException(404, e.getMessage());
         }
 
         if (files.isEmpty()) {
@@ -53,14 +53,14 @@ public class JPlagServiceImpl implements JPlagService {
                 if (withBaseCode) {
                     FileUtil.isOutToFile(baseCode.getInputStream(), new File(getJPlagResourcePath(), FileUtil.getFilePath("jplag", sessionId, "baseCode", baseCode.getOriginalFilename())));
                 }
-            } catch (IOException var13) {
-                throw new RestException(500, var13.getMessage());
+            } catch (IOException e) {
+                throw new RestException(500, e.getMessage());
             }
 
             try {
                 this.createJPlagResult(JLanguage.getLanguage(), "files", withBaseCode, sessionId);
-            } catch (Exception var11) {
-                throw new RestException(500, var11.getMessage());
+            } catch (Exception e) {
+                throw new RestException(500, e.getMessage());
             }
         }
     }
@@ -72,10 +72,10 @@ public class JPlagServiceImpl implements JPlagService {
         } else {
             InputStream is = new FileInputStream(result);
 
-            Response var4;
+            Response res;
             try {
                 System.out.println(result.length());
-                var4 = new Response(200, "Success", is.readAllBytes());
+                res = new Response(200, "Success", is.readAllBytes());
             } catch (Throwable var7) {
                 try {
                     is.close();
@@ -86,7 +86,7 @@ public class JPlagServiceImpl implements JPlagService {
                 throw var7;
             }
             is.close();
-            return var4;
+            return res;
         }
     }
 
