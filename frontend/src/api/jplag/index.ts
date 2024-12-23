@@ -8,6 +8,26 @@ interface Response <T = unknown> {
     data: T;
 }
 
+export function login(option: {
+    username: string;
+    password: string;
+}) {
+    return new Promise((resolve, reject) => {
+        const { username, password } = option
+        setTimeout(() => {
+            if (username === 'yxyhpwljy' && password === '202506')
+                resolve({
+                    code: 200,
+                    msg: '登陆成功'
+                })
+            reject({
+                code: 404,
+                msg: '用户名或密码错误'
+            })
+        }, 500)
+    })
+}
+
 export function fetchJplagByFiles(option: {
     baseCode: undefined;
     files: File[];
@@ -24,7 +44,7 @@ export function fetchJplagByFiles(option: {
         formData.append('baseCode', option.baseCode);
     }
 
-    return axios.post('/jplag/files', formData);
+    return axios.post('/files', formData);
 }
 
 export function fetchJplagByZipFiles(option: {
@@ -37,5 +57,5 @@ export function fetchJplagByZipFiles(option: {
     option.files.forEach(file => {
         formData.append('files', file, file.name)
     })
-    return axios.post('/jplag/dirs', formData)
+    return axios.post('/dirs', formData)
 }
