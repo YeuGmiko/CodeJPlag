@@ -28,7 +28,7 @@ export default defineConfig( {
       open: true,
       proxy: {
         '/api-jplag': {
-          target: 'http://8.138.14.75:8081',
+          target: 'http://backend-api',
           changeOrigin: true
         }
       },
