@@ -23,8 +23,6 @@ mvn clean package
 
 ```yml
 custom:
-#  前端项目BaseUrl, 多个用 ";" 进行分割
-  fronted_base_url: http://your/fronted/base/url;http://localhost
 #  用于该项目暂存文件的目录
   base-resource-path: path/to/your/absolute/resource_path
 ```
